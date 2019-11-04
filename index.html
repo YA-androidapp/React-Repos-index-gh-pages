@@ -102,11 +102,11 @@
             return (
                 <div>
                     <p> { this.state.name } </p>
-                    <input type="button" value="取得" onClick={()=>this.retrieveGitHubReposInformation(1)} />
+                    <input type="button" value="Retieve" onClick={()=>this.retrieveGitHubReposInformation(1)} />
                     <div>
                         <ul>
                             {this.state.repos.map((repo) => {
-                                let userUrl = 'https://github.com/' + repo.owner.login;
+                                let userUrl = repo.owner.html_url;
                                 let ghpagesUrl = 'https://' + repo.owner.login + '.github.io/' + repo.name;
                                 let lang = repo.language != null ? repo.language : '---';
 
