@@ -28,6 +28,7 @@
 
     <script type="text/babel">
     const URL_GITHUB_API = 'https://api.github.com/users/{USERNAME}/repos?per_page=100&page={PAGE}';
+    const suffixGithubIo = '.github.io';
 
     function getQueries() {
         var vars = [], max = 0, hash = '', array = '';
@@ -48,10 +49,26 @@
         constructor(props) {
             super(props);
 
-            let queries = getQueries();
             let queryName = 'ya-androidapp';
-            if(typeof(queries.name) != 'undefined'){
-                queryName = queries.name;
+
+            let usrname = window.location.username;
+            if ((typeof(usrname) != 'undefined') && (usrname.length > 0)) {
+                queryName = usrname;
+            } else {
+                let hstname = window.location.hostname;
+                if (hstname.indexOf(suffixGithubIo) > -1) {
+                    queryName = (hstname.split(suffixGithubIo))[0];
+                } else {
+                    let pthname = window.location.pathname;
+                    if ((hstname.indexOf('github.com') > -1) && (pthname.length > 1)) {
+                        queryName = ((pthname.substring(1)).split('/'))[0];
+                    } else {
+                        let queries = getQueries();
+                        if (typeof(queries.name) != 'undefined') {
+                            queryName = queries.name;
+                        }
+                    }
+                }
             }
 
             this.state = {
