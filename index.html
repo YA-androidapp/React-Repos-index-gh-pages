@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <title>Repos</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <!--
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    -->
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+</head>
+
+<body>
+    <div class="main">
+        <div class="section" id="app1">
+        </div>
+    </div>
+
+    <script type="text/babel">
+    const URL_GITHUB_API = 'https://api.github.com/users/{USERNAME}/repos?per_page=100&page={PAGE}';
+
+    function getQueries() {
+        var vars = [], max = 0, hash = '', array = '';
+        var url = window.location.search;
+
+        hash  = url.slice(1).split('&');
+        max = hash.length;
+        for (var i = 0; i < max; i++) {
+            array = hash[i].split('=');
+            vars.push(array[0]);
+            vars[array[0]] = array[1];
+        }
+
+        return vars;
+    }
+
+    class App extends React.Component {
+        constructor(props) {
+            super(props);
+
+            let queries = getQueries();
+            let queryName = 'ya-androidapp';
+            if(typeof(queries.name) != 'undefined'){
+                queryName = queries.name;
+            }
+
+            this.state = {
+                name: queryName,
+                repos:[]
+            }
+        }
+
+        retrieveGitHubReposInformation(paramPage) {
+            const PARAM_USER_NAME = this.state.name;
+            let self = this;
+
+            axios.get(URL_GITHUB_API.replace('{USERNAME}', PARAM_USER_NAME).replace('{PAGE}', paramPage))
+                .then(function (response) {
+                    self.setState({
+                        repos: self.state.repos.concat(response.data)
+                    });
+
+                    if(response.data.length>99){
+                        self.retrieveGitHubReposInformation(++paramPage);
+                    }
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+                .finally(function () {
+                });
+        }
+
+        render() {
+            return (
+                <div>
+                    <p> { this.state.name } </p>
+                    <input type="button" value="取得" onClick={()=>this.retrieveGitHubReposInformation(1)} />
+                    <div>
+                        <ul>
+                            {this.state.repos.map((repo) => {
+                                let userUrl = 'https://github.com/' + repo.owner.login;
+                                let ghpagesUrl = 'https://' + repo.owner.login + '.github.io/' + repo.name;
+                                let lang = repo.language != null ? repo.language : '---';
+
+                                if(repo.has_pages){
+                                    return <li key={repo.id}>
+                                        <a href={userUrl} target="_blank">
+                                            <img style={{ height: 24 }} src={repo.owner.avatar_url}></img>{repo.owner.login}
+                                        </a>
+                                        <span> / </span>
+                                        <a href={repo.html_url} target="_blank">{repo.name}</a>
+                                        <span> / </span>
+                                        {lang}
+                                        <span> / </span>
+                                        <a href={ghpagesUrl} target="_blank">Pages</a>
+                                        </li>;
+                                } else {
+                                    return <li key={repo.id}>
+                                        <a href={userUrl} target="_blank">
+                                            <img style={{ height: 24 }} src={repo.owner.avatar_url}></img>{repo.owner.login}
+                                        </a>
+                                        <span> / </span>
+                                        <a href={repo.html_url} target="_blank">{repo.name}</a>
+                                        <span> / </span>
+                                        {lang}
+                                        </li>;
+                                }
+                            })}
+                        </ul>
+                    </div>
+                </div>
+            )
+        }
+    }
+
+    ReactDOM.render(
+        <App />,
+        document.getElementById('app1')
+    );
+    </script>
+</body>
+
+</html><!-- Copyright (c) 2019 YA-androidapp(https://github.com/YA-androidapp) All rights reserved. -->
