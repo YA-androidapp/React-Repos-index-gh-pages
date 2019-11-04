@@ -62,31 +62,37 @@
         return vars;
     }
 
+    function getQueryName() {
+        let queryName = 'ya-androidapp';
+
+        let usrname = window.location.username;
+        if ((typeof(usrname) != 'undefined') && (usrname.length > 0)) {
+            queryName = usrname;
+        } else {
+            let hstname = window.location.hostname;
+            if (hstname.indexOf(suffixGithubIo) > -1) {
+                queryName = (hstname.split(suffixGithubIo))[0];
+            } else {
+                let pthname = window.location.pathname;
+                if ((hstname.indexOf('github.com') > -1) && (pthname.length > 1)) {
+                    queryName = ((pthname.substring(1)).split('/'))[0];
+                } else {
+                    let queries = getQueries();
+                    if (typeof(queries.name) != 'undefined') {
+                        queryName = queries.name;
+                    }
+                }
+            }
+        }
+
+        return queryName;
+    }
+
     class App extends React.Component {
         constructor(props) {
             super(props);
 
-            let queryName = 'ya-androidapp';
-
-            let usrname = window.location.username;
-            if ((typeof(usrname) != 'undefined') && (usrname.length > 0)) {
-                queryName = usrname;
-            } else {
-                let hstname = window.location.hostname;
-                if (hstname.indexOf(suffixGithubIo) > -1) {
-                    queryName = (hstname.split(suffixGithubIo))[0];
-                } else {
-                    let pthname = window.location.pathname;
-                    if ((hstname.indexOf('github.com') > -1) && (pthname.length > 1)) {
-                        queryName = ((pthname.substring(1)).split('/'))[0];
-                    } else {
-                        let queries = getQueries();
-                        if (typeof(queries.name) != 'undefined') {
-                            queryName = queries.name;
-                        }
-                    }
-                }
-            }
+            let queryName = getQueryName();
 
             this.state = {
                 name: queryName,
