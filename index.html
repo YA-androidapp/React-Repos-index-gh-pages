@@ -106,9 +106,14 @@
                     <div>
                         <ul>
                             {this.state.repos.map((repo) => {
-                                let userUrl = repo.owner.html_url;
+                                let archived = repo.archived ? 'Archived' : '-';
+                                let description = repo.description != null ? repo.description : '---';
+                                let disabled = repo.disabled ? 'Disabled' : '-';
+                                let forked = repo.fork ? 'Fork' : '-';
                                 let ghpagesUrl = 'https://' + repo.owner.login + '.github.io/' + repo.name;
                                 let lang = repo.language != null ? repo.language : '---';
+                                let license = repo.license != null ? repo.license.name : '---';
+                                let userUrl = repo.owner.html_url;
 
                                 if(repo.has_pages){
                                     return <li key={repo.id}>
@@ -118,9 +123,45 @@
                                         <span> / </span>
                                         <a href={repo.html_url} target="_blank">{repo.name}</a>
                                         <span> / </span>
-                                        {lang}
+                                        <a href={repo.git_url} target="_blank">git</a>
+                                        <span> / </span>
+                                        <a href={repo.ssh_url} target="_blank">ssh</a>
+                                        <span> / </span>
+                                        <a href={repo.clone_url} target="_blank">clone</a>
                                         <span> / </span>
                                         <a href={ghpagesUrl} target="_blank">Pages</a>
+                                        <br />
+                                        {repo.created_at}
+                                        <span> / </span>
+                                        {repo.updated_at}
+                                        <span> / </span>
+                                        {lang}
+                                        <span> / </span>
+                                        {license}
+                                        <span> / </span>
+                                        {archived}
+                                        <span> / </span>
+                                        {disabled}
+                                        <span> / </span>
+                                        {forked}
+                                        <span> / </span>
+                                        {repo.forks_count}
+                                        <span> / </span>
+                                        {repo.forks}
+                                        <span> / </span>
+                                        {repo.open_issues_count}
+                                        <span> / </span>
+                                        {repo.open_issues}
+                                        <span> / </span>
+                                        {repo.stargazers_count}
+                                        <span> / </span>
+                                        {repo.watchers_count}
+                                        <span> / </span>
+                                        {repo.watchers}
+                                        <br />
+                                        {description}
+                                        <br />
+                                        <br />
                                         </li>;
                                 } else {
                                     return <li key={repo.id}>
@@ -130,7 +171,43 @@
                                         <span> / </span>
                                         <a href={repo.html_url} target="_blank">{repo.name}</a>
                                         <span> / </span>
+                                        <a href={repo.git_url} target="_blank">git</a>
+                                        <span> / </span>
+                                        <a href={repo.ssh_url} target="_blank">ssh</a>
+                                        <span> / </span>
+                                        <a href={repo.clone_url} target="_blank">clone</a>
+                                        <br />
+                                        {repo.created_at}
+                                        <span> / </span>
+                                        {repo.updated_at}
+                                        <span> / </span>
                                         {lang}
+                                        <span> / </span>
+                                        {license}
+                                        <span> / </span>
+                                        {archived}
+                                        <span> / </span>
+                                        {disabled}
+                                        <span> / </span>
+                                        {forked}
+                                        <span> / </span>
+                                        {repo.forks_count}
+                                        <span> / </span>
+                                        {repo.forks}
+                                        <span> / </span>
+                                        {repo.open_issues_count}
+                                        <span> / </span>
+                                        {repo.open_issues}
+                                        <span> / </span>
+                                        {repo.stargazers_count}
+                                        <span> / </span>
+                                        {repo.watchers_count}
+                                        <span> / </span>
+                                        {repo.watchers}
+                                        <br />
+                                        {description}
+                                        <br />
+                                        <br />
                                         </li>;
                                 }
                             })}
