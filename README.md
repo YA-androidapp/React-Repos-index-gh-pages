@@ -8,7 +8,7 @@
 $ npx create-nuxt-app React-Repos-index-gh-pages
 
 create-nuxt-app v2.11.1
-✨  Generating Nuxt.js project in React-Repos-index-gh-pages
+? Generating Nuxt.js project in React-Repos-index-gh-pages
 ? Project name React-Repos-index-gh-pages
 ? Project description My tremendous Nuxt.js project
 ? Author name YA
@@ -24,7 +24,7 @@ Warning: name can no longer contain capital letters
 
 
 
-�  Successfully created project React-Repos-index-gh-pages
+?  Successfully created project React-Repos-index-gh-pages
 
   To get started:
 
@@ -36,6 +36,16 @@ Warning: name can no longer contain capital letters
         cd React-Repos-index-gh-pages
         yarn build
         yarn start
+```
+
+GitHubリポジトリからcloneした場合は、`npx`の代わりに以下のコマンドを実行する
+
+```ps
+$ cd React-Repos-index-gh-pages
+$ yarn install
+$ yarn dev
+$ yarn build
+$ yarn start
 ```
 
 デプロイ用のディレクトリ(dist/)へアプリケーションをビルドする
