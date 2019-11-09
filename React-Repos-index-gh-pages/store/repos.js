@@ -48,7 +48,7 @@ export const actions = {
       context.getters['page']
     );
     console.log('fetchRepos url', url)
-    const repoItems = this.$axios
+    const repoItems = await this.$axios
       .$get(url)
       .then(function (response) {
         console.log('addRepos', JSON.stringify(response));

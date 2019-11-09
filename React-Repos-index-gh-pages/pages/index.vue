@@ -1,13 +1,22 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">React-Repos-index-gh-pages</h1>
-      <h2 class="subtitle">My tremendous Nuxt.js project</h2>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
-        <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
+  <div>
+    <div class="container">
+      <div>
+        <logo />
+        <h1 class="title">React-Repos-index-gh-pages</h1>
+        <h2 class="subtitle">My tremendous Nuxt.js project</h2>
+        <div class="links">
+          <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
+          <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
+        </div>
       </div>
+    </div>
+    <div>
+      <ul>
+        <li v-for="repo in repos" :key="repo.id">
+          <span>{{repo.full_name}}</span>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -77,6 +86,13 @@ export default {
     }
 
     await store.dispatch("repos/fetchRepos");
+  },
+
+  computed: {
+    repos() {
+      console.log("this.$store", this.$store);
+      return this.$store.getters["repos/repos"];
+    }
   }
 };
 </script>
