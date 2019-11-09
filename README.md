@@ -38,7 +38,7 @@ Warning: name can no longer contain capital letters
         yarn start
 ```
 
-GitHubリポジトリからcloneした場合は、`npx`の代わりに以下のコマンドを実行する
+GitHub リポジトリから clone した場合は、`npx`の代わりに以下のコマンドを実行する
 
 ```ps
 $ cd React-Repos-index-gh-pages
@@ -104,3 +104,7 @@ d-----        2019/11/07    12:48                _nuxt
 -a----        2019/11/07    12:44            435 README.md
 -a----        2019/11/07    12:48            995 sw.js
 ```
+
+---
+
+Copyright (c) 2019 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
