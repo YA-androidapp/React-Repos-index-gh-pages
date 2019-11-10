@@ -1,10 +1,10 @@
-# React-Repos-index-gh-pages
+# Nuxtjs-Repos-index-gh-pages
 
 > My tremendous Nuxt.js project
 
 ## Build Setup
 
-``` bash
+```bash
 # install dependencies
 $ yarn install
 

@@ -3,7 +3,7 @@
     <div class="container">
       <div>
         <logo />
-        <h1 class="title">React-Repos-index-gh-pages</h1>
+        <h1 class="title">Nuxtjs-Repos-index-gh-pages</h1>
         <h2 class="subtitle">My tremendous Nuxt.js project</h2>
         <div class="links">
           <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
