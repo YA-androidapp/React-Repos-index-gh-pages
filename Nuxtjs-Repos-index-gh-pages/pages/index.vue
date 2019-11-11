@@ -70,15 +70,17 @@
             <td>
               {{repo.fork ? 'T' : '-'}}
               <br />
-              {{repo.forks_count}}
+              <a :href="repo.html_url + '/network/members'" target="_blank">{{repo.forks_count}}</a>
             </td>
             <td>
-              {{repo.open_issues_count}}
-              <br />
-              {{repo.open_issues}}
+              <a :href="repo.html_url + '/issues'" target="_blank">{{repo.open_issues_count}}</a>
             </td>
-            <td>{{repo.stargazers_count}}</td>
-            <td>{{repo.watchers_count}}</td>
+            <td>
+              <a :href="repo.html_url + '/stargazers'" target="_blank">{{repo.stargazers_count}}</a>
+            </td>
+            <td>
+              <a :href="repo.html_url + '/watchers'" target="_blank">{{repo.watchers_count}}</a>
+            </td>
             <td>{{repo.description != null ? repo.description : '---'}}</td>
           </tr>
         </tbody>
