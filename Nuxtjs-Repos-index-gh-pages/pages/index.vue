@@ -13,15 +13,38 @@
     </div>
     <div class="container-table">
       <table border="1">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Repository</th>
+            <th>URL</th>
+            <th>Github Pages</th>
+            <th>Created</th>
+            <th>Updated</th>
+            <th>Language</th>
+            <th>License</th>
+            <th>Archived</th>
+            <th>Disabled</th>
+            <th>Fork</th>
+            <th>Issues</th>
+            <th>Stargazers</th>
+            <th>Watchers</th>
+            <th>Description</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr v-for="repo in repos" :key="repo.id">
+          <tr v-for="(repo, index) in repos" :key="repo.id">
+            <td>{{index + 1}}</td>
             <td>
               <a :href="repo.owner.html_url" target="_blank">
                 <img class="avatar-img" :src="repo.owner.avatar_url" />
                 {{repo.owner.login}}
               </a>
-              /
-              <a :href="repo.html_url" target="_blank">&nbsp;{{repo.name}}&nbsp;</a>
+              &nbsp;/
+              <a
+                :href="repo.html_url"
+                target="_blank"
+              >&nbsp;{{repo.name}}&nbsp;</a>
             </td>
             <td>
               <a :href="repo.git_url" target="_blank">git</a>
@@ -38,27 +61,16 @@
                 >Pages</a>
               </span>
             </td>
+            <td>{{repo.created_at}}</td>
+            <td>{{repo.updated_at}}</td>
+            <td>{{repo.language != null ? repo.language : '---'}}</td>
+            <td>{{repo.license != null ? repo.license.name : '---'}}</td>
+            <td>{{repo.archived ? 'T' : '-'}}</td>
+            <td>{{repo.disabled ? 'T' : '-'}}</td>
             <td>
-              {{repo.created_at}}
-              <br />
-              {{repo.updated_at}}
-            </td>
-            <td>
-              {{repo.language != null ? repo.language : '---'}}
-              <br />
-              {{repo.license != null ? repo.license.name : '---'}}
-            </td>
-            <td>
-              {{repo.archived ? 'Archived' : '-'}}
-              <br />
-              {{repo.disabled ? 'Disabled' : '-'}}
-            </td>
-            <td>
-              {{repo.fork ? 'Fork' : '-'}}
+              {{repo.fork ? 'T' : '-'}}
               <br />
               {{repo.forks_count}}
-              <br />
-              {{repo.forks}}
             </td>
             <td>
               {{repo.open_issues_count}}
@@ -66,11 +78,7 @@
               {{repo.open_issues}}
             </td>
             <td>{{repo.stargazers_count}}</td>
-            <td>
-              {{repo.watchers_count}}
-              <br />
-              {{repo.watchers}}
-            </td>
+            <td>{{repo.watchers_count}}</td>
             <td>{{repo.description != null ? repo.description : '---'}}</td>
           </tr>
         </tbody>
