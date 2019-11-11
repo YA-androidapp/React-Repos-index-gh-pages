@@ -11,12 +11,70 @@
         </div>
       </div>
     </div>
-    <div>
-      <ul>
-        <li v-for="repo in repos" :key="repo.id">
-          <span>{{repo.full_name}}</span>
-        </li>
-      </ul>
+    <div class="container-table">
+      <table border="1">
+        <tbody>
+          <tr v-for="repo in repos" :key="repo.id">
+            <td>
+              <a :href="repo.owner.html_url" target="_blank">
+                <img class="avatar-img" :src="repo.owner.avatar_url" />
+                {{repo.owner.login}}
+              </a>
+              /
+              <a :href="repo.html_url" target="_blank">&nbsp;{{repo.name}}&nbsp;</a>
+            </td>
+            <td>
+              <a :href="repo.git_url" target="_blank">git</a>
+              <br />
+              <a :href="repo.ssh_url" target="_blank">ssh</a>
+              <br />
+              <a :href="repo.clone_url" target="_blank">clone</a>
+            </td>
+            <td>
+              <span v-if="repo.has_pages">
+                <a
+                  :href="'https://' + repo.owner.login + '.github.io/' + repo.name"
+                  target="_blank"
+                >Pages</a>
+              </span>
+            </td>
+            <td>
+              {{repo.created_at}}
+              <br />
+              {{repo.updated_at}}
+            </td>
+            <td>
+              {{repo.language != null ? repo.language : '---'}}
+              <br />
+              {{repo.license != null ? repo.license.name : '---'}}
+            </td>
+            <td>
+              {{repo.archived ? 'Archived' : '-'}}
+              <br />
+              {{repo.disabled ? 'Disabled' : '-'}}
+            </td>
+            <td>
+              {{repo.fork ? 'Fork' : '-'}}
+              <br />
+              {{repo.forks_count}}
+              <br />
+              {{repo.forks}}
+            </td>
+            <td>
+              {{repo.open_issues_count}}
+              <br />
+              {{repo.open_issues}}
+            </td>
+            <td>{{repo.stargazers_count}}</td>
+            <td>
+              {{repo.watchers_count}}
+              <br />
+              {{repo.watchers}}
+            </td>
+            <td>{{repo.description != null ? repo.description : '---'}}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -127,6 +185,10 @@ export default {
 
 .links {
   padding-top: 15px;
+}
+
+.avatar-img {
+  height: 24px;
 }
 </style>
 <!-- Copyright (c) 2019 YA-androidapp(https://github.com/YA-androidapp) All rights reserved. -->
