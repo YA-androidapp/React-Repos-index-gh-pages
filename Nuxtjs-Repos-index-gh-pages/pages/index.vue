@@ -165,6 +165,7 @@ export default {
 
       if (sortKey) {
         data = data.slice().sort(function(a, b) {
+          //TODO: sortKeyが深い階層の場合
           if (null === a[sortKey]) {
             return -1 * order;
           }
