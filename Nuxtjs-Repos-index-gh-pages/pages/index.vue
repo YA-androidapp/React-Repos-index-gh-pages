@@ -15,25 +15,14 @@
       <table border="1">
         <thead>
           <tr>
-            <th>#</th>
-            <th>Repository</th>
-            <th>URL</th>
-            <th>Github Pages</th>
-            <th>Created</th>
-            <th>Updated</th>
-            <th>Language</th>
-            <th>License</th>
-            <th>Archived</th>
-            <th>Disabled</th>
-            <th>Fork</th>
-            <th>Issues</th>
-            <th>Stargazers</th>
-            <th>Watchers</th>
-            <th>Description</th>
+            <th v-for="(value, key) in columns" @click="sortBy(key)" :key="key">
+              {{ value }}
+              <span class="arrow" :class="sortOrders[key] > 0 ? 'asc' : 'dsc'"></span>
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(repo, index) in repos" :key="repo.id">
+          <tr v-for="(repo, index) in filteredRepos" :key="repo.id">
             <td>{{index + 1}}</td>
             <td>
               <a :href="repo.owner.html_url" target="_blank">
@@ -156,11 +145,70 @@ export default {
     await store.dispatch("repos/fetchRepos");
   },
 
-  computed: {
-    repos() {
-      console.log("this.$store", this.$store);
-      return this.$store.getters["repos/repos"];
+  methods: {
+    sortBy: function(key) {
+      this.sortKey = key;
+      this.sortOrders[key] = this.sortOrders[key] * -1;
     }
+  },
+
+  computed: {
+    filteredRepos() {
+      console.log("this.$store", this.$store);
+      var data = this.$store.getters["repos/repos"];
+
+      var sortKey = this.sortKey;
+      var order = this.sortOrders[sortKey] || 1;
+      console.log("computed", "filteredRepos()", "data", data);
+      console.log("computed", "filteredRepos()", "sortKey", sortKey);
+      console.log("computed", "filteredRepos()", "order", order);
+
+      if (sortKey) {
+        data = data.slice().sort(function(a, b) {
+          if (null === a[sortKey]) {
+            return -1 * order;
+          }
+          if (null === b[sortKey]) {
+            return 1 * order;
+          }
+          a = String(a[sortKey]).toLowerCase();
+          b = String(b[sortKey]).toLowerCase();
+          return (a === b ? 0 : a > b ? 1 : -1) * order;
+        });
+      }
+      return data;
+    }
+  },
+
+  data: function() {
+    var columns = {
+      index: "#",
+      repository: "Repository",
+      url: "URL",
+      githubpages: "Github Pages",
+      created_at: "Created",
+      updated_at: "Updated",
+      language: "Language",
+      license: "License",
+      archived: "Archived",
+      disabled: "Disabled",
+      fork: "Fork",
+      issues: "Issues",
+      stargazers: "Stargazers",
+      watchers: "Watchers",
+      description: "Description"
+    };
+    var sortOrders = {};
+    Object.keys(columns).forEach(function(key) {
+      sortOrders[key] = 1;
+    });
+
+    return {
+      columns: columns,
+      repos: this.$store.getters["repos/repos"],
+      sortKey: "",
+      sortOrders: sortOrders
+    };
   }
 };
 </script>
