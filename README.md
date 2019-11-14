@@ -105,6 +105,47 @@ d-----        2019/11/07    12:48                _nuxt
 -a----        2019/11/07    12:48            995 sw.js
 ```
 
+GitHub Pages へデプロイするためのファイルを、ディレクトリ(dist/)へアプリケーションをビルドする(ルートディレクトリではなく`/Nuxtjs-Repos-index-gh-pages`に配置しても動くようにする)
+
+```ps
+$ yarn build:gh-pages
+yarn run v1.19.0
+$ cross-env DEPLOY_ENV=GH_PAGES nuxt build
+i Production build                                                                                                                                                                          12:18:20
+√ Builder initialized                                                                                                                                                                       12:18:20
+√ Nuxt files generated                                                                                                                                                                      12:18:20
+
+√ Client
+  Compiled successfully in 15.68s
+
+
+Hash: 7b44e0f9e9048f56f9ae
+Version: webpack 4.41.2
+Time: 15678ms
+Built at: 2019-11-14 12:18:37
+                         Asset       Size  Chunks                         Chunk Names
+../server/client.manifest.json   7.67 KiB          [emitted]
+       00a818db7b19c9b6c982.js   2.36 KiB       3  [emitted] [immutable]  runtime
+       29bf63e9c4f625fd6a37.js   51.5 KiB       0  [emitted] [immutable]  app
+       8280da91af564e59298d.js    170 KiB       1  [emitted] [immutable]  commons.app
+                      LICENSES  571 bytes          [emitted]
+       c32cafddae857dd6c697.js    4.3 KiB       4  [emitted] [immutable]
+       fefe4bc2ddbfbb08f00b.js   8.18 KiB       2  [emitted] [immutable]  pages_index
+     icons/icon_120.5f6a36.png   4.68 KiB          [emitted]
+     icons/icon_144.5f6a36.png    5.8 KiB          [emitted]
+     icons/icon_152.5f6a36.png    6.1 KiB          [emitted]
+     icons/icon_192.5f6a36.png   7.83 KiB          [emitted]
+     icons/icon_384.5f6a36.png   18.1 KiB          [emitted]
+     icons/icon_512.5f6a36.png     20 KiB          [emitted]
+      icons/icon_64.5f6a36.png   2.35 KiB          [emitted]
+        manifest.b4666763.json   1.01 KiB          [emitted]
+ + 1 hidden asset
+Entrypoint app = 00a818db7b19c9b6c982.js 8280da91af564e59298d.js 29bf63e9c4f625fd6a37.js
+i Generating pages                                                                                                                                                                          12:18:38
+√ Generated /                                                                                                                                                                               12:18:38
+Done in 22.49s.
+```
+
 ---
 
 Copyright (c) 2019 YA-androidapp(https://github.com/YA-androidapp) All rights reserved.
