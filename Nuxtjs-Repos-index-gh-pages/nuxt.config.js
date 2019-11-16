@@ -7,6 +7,9 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
   }
 } : {}
 
+// API
+const bodyParser = require('body-parser')
+
 export default {
   mode: 'spa',
   /*
@@ -78,5 +81,9 @@ export default {
   ...routerBase,
 
   // API
-  serverMiddleware: ["~~/api/"],
+  serverMiddleware: [
+    bodyParser.json(),
+    '~/api'
+  ],
+
 }
