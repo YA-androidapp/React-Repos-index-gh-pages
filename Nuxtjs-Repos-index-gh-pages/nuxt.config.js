@@ -49,7 +49,10 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/axios'],
+  plugins: [{
+    src: '~/plugins/axios',
+    ssr: false
+  }],
   /*
    ** Nuxt.js dev-modules
    */
@@ -67,13 +70,13 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    proxy: true,
+    proxy: true
   },
   proxy: {
-    '/pages/': {
+    '/pgs/': {
       target: 'https://ya-androidapp.github.io',
       pathRewrite: {
-        '^/pages/': '/'
+        '^/pgs': ''
       }
     },
     '/prxy/': {

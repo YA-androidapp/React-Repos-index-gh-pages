@@ -2,9 +2,10 @@ export default function ({
   $axios,
   redirect
 }) {
+  $axios.setToken('access_token')
+
   $axios.onResponse(config => {
-    // $axios.setHeader('Access-Control-Allow-Origin', 'https://api.github.io')
-    // $axios.setHeader('Access-Control-Allow-Origin', 'https://ya-androidapp.github.io')
     $axios.setHeader('Access-Control-Allow-Origin', '*')
+    // $axios.setHeader('Access-Control-Allow-Headers', '*')
   })
 }

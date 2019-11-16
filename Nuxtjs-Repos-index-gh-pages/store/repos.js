@@ -49,9 +49,9 @@ export const actions = {
       context.getters['page']
     );
     console.log('fetchRepos url', url)
+    console.log('fetchRepos url2', '/prxy' + url)
     const repoItems = await this.$axios
-      .$get((context.getters['page'] > 1 ?
-        '/prxy' : '/prxy') + url)
+      .$get('/prxy' + url)
       .then(function (response) {
         // console.log('addRepos', JSON.stringify(response));
         console.log('addRepos', 'response');
@@ -79,12 +79,17 @@ export const actions = {
       const a = target.querySelector("a");
       if (a != null) {
         const link = a.getAttribute("href");
-        console.log("fetchThumbnail()", "link", link);
-        const response = await this.$axios({
+        console.log("fetchThumbnail()", "url", link);
+        const pagesurl = '/pgs/' + (link.split('github.io/')[1]);
+        console.log("fetchThumbnail()", "url2", pagesurl);
+
+        const pageresponse = await this.$axios({
           method: "get",
-          url: '/api/' + link
+          url: pagesurl
         });
-        console.log("fetchThumbnail()", "response", response);
+
+        // console.log('fetchThumbnail()', JSON.stringify(pageresponse));
+        console.log("fetchThumbnail()", "pageresponse", pageresponse);
         console.log("fetchThumbnail()", "target.id", target.id);
 
         const target_i = document
@@ -102,6 +107,34 @@ export const actions = {
 
           target_i.insertAdjacentHTML("beforeend", renderArea);
           console.log("fetchThumbnail()", "insertAdjacentHTML", target_i);
+
+          const iframe = document.querySelector("#" + renderAreaId);
+          console.log("fetchThumbnail()", "iframe", iframe);
+          iframe.contentDocument.open();
+          console.log("fetchThumbnail()", "open");
+          iframe.contentDocument.write(pageresponse.data);
+          console.log("fetchThumbnail()", "write");
+          iframe.contentDocument.close();
+          console.log("fetchThumbnail()", "close");
+
+          iframe.onload = async () => {
+            console.log("fetchThumbnail()", "iframe.onload");
+            const canvas = await html2canvas(
+              iframe.contentDocument.querySelector("body"), {
+                logging: false,
+                allowTaint: true,
+                useCORS: true,
+                width: 1280,
+                height: 1024
+              }
+            );
+            console.log("fetchThumbnail()", "canvas", canvas);
+
+            canvas.style.width = parseInt(canvas.width / 4, 10) + "px";
+            canvas.style.height = parseInt(canvas.height / 4, 10) + "px";
+            target.insertBefore(canvas, target.firstChild);
+            iframe.remove();
+          };
         }
       }
 
