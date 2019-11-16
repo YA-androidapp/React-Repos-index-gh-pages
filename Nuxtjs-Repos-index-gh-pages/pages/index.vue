@@ -53,7 +53,7 @@
                             <br />
                             <a :href="repo.clone_url" target="_blank">clone</a>
                         </td>
-                        <td class="link-gp">
+                        <td class="link-gp" :id="'i' + repo.id">
                             <span v-if="repo.has_pages">
                                 <a
                                     :href="'https://' + repo.owner.login + '.github.io/' + repo.name"

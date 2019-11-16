@@ -53,7 +53,8 @@ export const actions = {
       .$get((context.getters['page'] > 1 ?
         '/prxy' : '/prxy') + url)
       .then(function (response) {
-        console.log('addRepos', JSON.stringify(response));
+        // console.log('addRepos', JSON.stringify(response));
+        console.log('addRepos', 'response');
         context.commit('addRepos', response)
         if (response.length > 99) {
           context.commit('incrementPage')
@@ -75,13 +76,34 @@ export const actions = {
     let index = 0;
     document.querySelectorAll(".link-gp").forEach(async target => {
       console.log("fetchThumbnail()", "target", target);
-      const link = target.querySelector("a").getAttribute("href");
-      console.log("fetchThumbnail()", "link", link);
-      const response = await this.$axios({
-        method: "get",
-        url: '/api/' + link
-      });
-      console.log("fetchThumbnail()", "response", response);
+      const a = target.querySelector("a");
+      if (a != null) {
+        const link = a.getAttribute("href");
+        console.log("fetchThumbnail()", "link", link);
+        const response = await this.$axios({
+          method: "get",
+          url: '/api/' + link
+        });
+        console.log("fetchThumbnail()", "response", response);
+        console.log("fetchThumbnail()", "target.id", target.id);
+
+        const target_i = document
+          .querySelector("#" + target.id);
+        if (target_i != null) {
+          console.log("fetchThumbnail()", "target_i", target_i);
+
+          const renderAreaId = "render-area" + index;
+          console.log("fetchThumbnail()", "renderAreaId", renderAreaId);
+          const renderArea =
+            '<iframe id="' +
+            renderAreaId +
+            '" sandbox="allow-scripts allow-same-origin" width="1280" height="1024" scrolling="no" frameborder="no" style="position: absolute;"></iframe>';
+          console.log("fetchThumbnail()", "renderArea", renderArea);
+
+          target_i.insertAdjacentHTML("beforeend", renderArea);
+          console.log("fetchThumbnail()", "insertAdjacentHTML", target_i);
+        }
+      }
 
       index++;
     });
