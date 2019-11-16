@@ -1,9 +1,10 @@
 import {
   Store
 } from "vuex";
-
+const PATH_GITHUB_API =
+  "/users/{USERNAME}/repos?per_page=100&page={PAGE}";
 const URL_GITHUB_API =
-  "https://api.github.com/users/{USERNAME}/repos?per_page=100&page={PAGE}";
+  "https://api.github.com" + PATH_GITHUB_API;
 
 export const state = () => ({
   page: 1,
@@ -43,13 +44,14 @@ export const mutations = {
 export const actions = {
   async fetchRepos(context) {
     console.log('fetchRepos')
-    const url = URL_GITHUB_API.replace("{USERNAME}", context.getters['username']).replace(
+    const url = PATH_GITHUB_API.replace("{USERNAME}", context.getters['username']).replace(
       "{PAGE}",
       context.getters['page']
     );
     console.log('fetchRepos url', url)
     const repoItems = await this.$axios
-      .$get(url)
+      .$get((context.getters['page'] > 1 ?
+        '/prxy' : '/prxy') + url)
       .then(function (response) {
         console.log('addRepos', JSON.stringify(response));
         context.commit('addRepos', response)
@@ -58,12 +60,31 @@ export const actions = {
           context.dispatch('fetchRepos')
         } else {
           console.log(context.getters['repos'])
+
+          context.dispatch("fetchThumbnail");
         }
       })
       .catch(function (error) {
         console.log(error);
       })
       .finally(function () {});
+  },
+
+  async fetchThumbnail() {
+    console.log("fetchThumbnail()");
+    let index = 0;
+    document.querySelectorAll(".link-gp").forEach(async target => {
+      console.log("fetchThumbnail()", "target", target);
+      const link = target.querySelector("a").getAttribute("href");
+      console.log("fetchThumbnail()", "link", link);
+      const response = await this.$axios({
+        method: "get",
+        url: '/api/' + link
+      });
+      console.log("fetchThumbnail()", "response", response);
+
+      index++;
+    });
   }
 }
 
