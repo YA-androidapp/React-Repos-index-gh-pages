@@ -75,5 +75,8 @@ export default {
   },
 
   //  GitHub Pages support
-  ...routerBase
+  ...routerBase,
+
+  // API
+  serverMiddleware: ["~~/api/"],
 }
