@@ -74,7 +74,7 @@ export default {
   },
   proxy: {
     '/pgs/': {
-      target: 'https://ya-androidapp.github.io',
+      target: 'https://github.com',
       pathRewrite: {
         '^/pgs': '/'
       }
@@ -83,13 +83,6 @@ export default {
       target: 'https://api.github.com',
       pathRewrite: {
         '^/prxy': '/'
-      }
-    },
-    // for TEST
-    '/gg': {
-      target: 'https://www.google.com',
-      pathRewrite: {
-        '^/gg': ''
       }
     }
   },
