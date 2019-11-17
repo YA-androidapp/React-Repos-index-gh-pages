@@ -6,5 +6,7 @@ export default function ({
 
   $axios.onResponse(config => {
     $axios.setHeader('Access-Control-Allow-Origin', '*')
+    $axios.setHeader('Access-Control-Allow-Headers', '*')
+    $axios.setHeader('Access-Control-Allow-Methods', '*')
   })
 }

@@ -83,6 +83,30 @@ export const actions = {
         const pagesurl = '/pgs/' + (link.split('github.io/')[1]);
         console.log("fetchThumbnail()", "url2", pagesurl);
 
+        //
+        await this.$axios
+          .$get("/pgs/Timer")
+          .then(function (response) {
+            // console.log('addRepos', JSON.stringify(response));
+            console.log('addRepos2', 'response');
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .finally(function () {});
+        await this.$axios
+          .$get("/gg")
+          .then(function (response) {
+            // console.log('addRepos', JSON.stringify(response));
+            console.log('addRepos2', 'response');
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
+          .finally(function () {});
+        return
+        //
+
         const pageresponse = await this.$axios({
           method: "get",
           url: pagesurl
