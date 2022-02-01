@@ -1,24 +1,5 @@
 <template>
-    <div>
-        <div class="container">
-            <div>
-                <logo />
-                <h1 class="title">Nuxtjs-Repos-index-gh-pages</h1>
-                <h2 class="subtitle">My tremendous Nuxt.js project</h2>
-                <div class="links">
-                    <a
-                        href="https://nuxtjs.org/"
-                        target="_blank"
-                        class="button--green"
-                    >Documentation</a>
-                    <a
-                        href="https://github.com/nuxt/nuxt.js"
-                        target="_blank"
-                        class="button--grey"
-                    >GitHub</a>
-                </div>
-            </div>
-        </div>
+    <div class="main">
         <div class="container-table">
             <table border="1">
                 <thead>
@@ -102,7 +83,6 @@
 </template>
 
 <script>
-    import Logo from "~/components/Logo.vue";
     import { mapGetters } from "vuex";
 
     const suffixGithubIo = ".github.io";
@@ -180,10 +160,6 @@
     }
 
     export default {
-        components: {
-            Logo
-        },
-
         async asyncData({ store }) {
             const username = getQueryName();
             console.log("username", username);
@@ -288,15 +264,6 @@
 </script>
 
 <style>
-    .container {
-        margin: 0 auto;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-    }
-
     .title {
         font-family: "Quicksand", "Source Sans Pro", -apple-system,
             BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
@@ -324,4 +291,4 @@
         height: 24px;
     }
 </style>
-<!-- Copyright (c) 2019 YA-androidapp(https://github.com/YA-androidapp) All rights reserved. -->
+<!-- Copyright (c) 2022 YA-androidapp(https://github.com/YA-androidapp) All rights reserved. -->
